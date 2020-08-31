@@ -1,11 +1,11 @@
 import React, { Component} from 'react';
 import './App.css';
 import './greetingData.json'
-import Dashboard from "./components/Dashboard";
+import DashBoard from "./component/DashBoard";
 
 export default class App extends Component{
 	
 	render() {
-		return (<Dashboard/>);
+		return (<DashBoard/>);
 	}
 }

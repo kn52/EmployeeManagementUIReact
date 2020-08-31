@@ -1,12 +1,3 @@
-.font_family {
-	font-family:"Cambria";	
-}
-
-.add_image_icon {
-	width:30px; 
-	height:30px;
-}
-
 .add_employee {
 	border:1px solid white;
 	display:flex;
