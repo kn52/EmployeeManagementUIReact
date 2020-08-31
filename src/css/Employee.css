@@ -7,3 +7,14 @@
 	width:30px; 
 	height:30px;
 }
+
+.display_appbar {
+	flex-grow: 1;
+	font-size: 40px;
+}
+
+.greeting_image_icon {
+	width:40px; 
+	height:40px;
+	padding-left: calc(100vh-50vh);	
+}

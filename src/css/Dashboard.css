@@ -1,8 +1,12 @@
 .add_employee {
 	border:1px solid white;
 	display:flex;
-	justify-content:space-between; 
+	justify-content:center; 
 	width:300px;
+}
+
+.employee {
+	height:40px;
 }
 
 .add_employee_button {
