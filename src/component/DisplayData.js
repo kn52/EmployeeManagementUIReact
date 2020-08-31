@@ -1,6 +1,5 @@
 import React from 'react';
 import '../css/Employee.css'
-import '../css/DisplayData.css'
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -9,9 +8,9 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import Edit from '../images/svg/Edit.svg'
-import Delete from '../images/svg/Delete.svg'
-import Button from '@material-ui/core/Button';
+import DisplayButton from '../utility/DisplayButton';
+import Edit from '../images/svg/Edit.svg';
+import Delete from '../images/svg/Delete.svg';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -73,10 +72,8 @@ export default function CustomizedTables() {
               </StyledTableCell>
               <StyledTableCell align="left">{row.lastname}</StyledTableCell>
               <StyledTableCell align="left">{row.email}</StyledTableCell>
-              <StyledTableCell align="left"><Button variant="contained"
-				color="primary" style={{fontFamily:'Cambria', fontWeight:'bold'}}><img src={Edit} alt="" width="30px" height="30px"/></Button></StyledTableCell>
-              <StyledTableCell align="left"><Button variant="contained"
-				color="primary" style={{fontFamily:'Cambria', fontWeight:'bold'}}><img src={Delete} alt="" width="30px" height="30px"/></Button></StyledTableCell>
+              <StyledTableCell align="left"><DisplayButton imag={Edit} imageclass='image_icon'  buttonclass='font_family' txt='' /></StyledTableCell>
+              <StyledTableCell align="left"><DisplayButton imag={Delete} imageclass='image_icon'  buttonclass='font_family' txt='' /></StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

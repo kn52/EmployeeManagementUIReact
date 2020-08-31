@@ -1,5 +1,6 @@
 .font_family {
-	font-family:"Cambria";	
+	font-family: Cambria !important;
+	font-weight: bold !important;
 }
 
 .image_icon {
