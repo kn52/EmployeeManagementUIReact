@@ -1,0 +1,22 @@
+.font_family {
+	font-family:"Cambria";	
+}
+
+.add_image_icon {
+	width:30px; 
+	height:30px;
+}
+
+.add_employee {
+	border:1px solid white;
+	display:flex;
+	justify-content:space-between; 
+	width:300px;
+}
+
+.add_employee_button {
+	font-size:20px;
+	font-weight:bold;
+	width:250px; 
+	height:'50px'
+}
