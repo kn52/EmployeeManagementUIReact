@@ -3,6 +3,8 @@ import '../css/EmployeeDetail.css';
 import Button from '@material-ui/core/Button';
 import DisplayAppBar from '../utility/DisplayAppBar';
 import TextField from '@material-ui/core/TextField';
+import EmployeeService from '../service/EmployeeService';
+import { useLocation } from "react-router-dom";
 
 export default function AddEmployee (props) {
 
@@ -57,11 +59,17 @@ export default function AddEmployee (props) {
                 <div className="space"></div>
                 <div className="child_container">
                    <div className="div_content">
-                        <span className="employee_title">Add Employee</span>
+                        <span className="employee_title">{window.location.href.includes('add')? 'Add Employee' : 'Update Employee'}</span>
                     </div>
                     <div className="space"></div>
                     <form id="baseForm" onSubmit={handleSave} onReset={handleCancel}>
 						<div className="div_content">
+                            <TextField name="id" label="ID" variant="outlined" value={id}
+                                onChange={handleValues}  size="small" style={{display:window.location.href.includes('add')? 'none' : 'block !impotant'}} required />
+                        </div>
+
+                        <div className="space" style={{display:window.location.href.includes('add')? 'none' : 'block !impotant'}}></div>
+                        <div className="div_content">
                             <TextField name="firstname" label="First Name" variant="outlined" value={firstname}
                                 onChange={handleValues}  size="small" required />
                         </div>
@@ -97,7 +105,7 @@ export default function AddEmployee (props) {
                             
                         <div className="div_content">
                             <Button type="submit" className="employee_button" style={{backgroundColor:'#3f51b5',color:'white'}} >
-                                Add Employee
+                                {window.location.href.includes('add')? 'Add Employee' : 'Update Employee'}
                             </Button>
                         </div>     
                     </form>
