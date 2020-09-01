@@ -74,9 +74,11 @@ export default function DisplayData (props) {
               <StyledTableCell align="left">{row.name}</StyledTableCell>
               <StyledTableCell align="left">{row.email}</StyledTableCell>
               <StyledTableCell align="left">
-			  <Button variant = "contained" color = "primary" className='font_family' onClick={()=>props.edit(row)}>
+			  <Button variant = "contained" color = "primary" className='font_family' onClick={()=>props.edit(row.id)}>
 				<img src={Edit} alt="" className='image_icon'/></Button></StyledTableCell>
-              <StyledTableCell align="left"><Button variant = "contained" color = "primary" className='font_family' onClick={()=>props.del(row.id)}>
+              <StyledTableCell align="left"><Button variant = "contained" color = "primary" className='font_family' onClick={()=>{
+				  if(window.confirm('Delete the record'))
+			  {props.del(row.id)}}}>
 				<img src={Delete} alt="" className='image_icon'/></Button></StyledTableCell>
             </StyledTableRow>
           ))}

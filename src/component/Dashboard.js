@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import '../css/DashBoard.css';
 import '../css/Employee.css';
-import history from "../utility/history";
+import history from '../utility/history';
 import DisplayData from './DisplayData';
 import DisplayAppBar from '../utility/DisplayAppBar';
 import Button from '@material-ui/core/Button';
@@ -13,6 +13,7 @@ export default function DashBoard () {
 	const [employeeData,setEmployeeData] = React.useState([]);
 	
 	const handleAddEmployee = () => {
+		
 		history.push({
 			pathname:'/employee/add',
 			state:{data:''}
@@ -20,7 +21,6 @@ export default function DashBoard () {
 	}
 	
 	const handleEdit = (employee) => {
-		console.log(employee);
 		history.push({
 			pathname:'/employee/edit',
 			state: {data : employee}
@@ -29,7 +29,6 @@ export default function DashBoard () {
 	
 	const getEmployeeData = () => {
 		EmployeeService.getAllEmployee().then((res) => {
-			console.log(res.data.data);
 			setEmployeeData(res.data.data);
 		})
 		.catch((err) => {

@@ -1,6 +1,6 @@
 import axios from 'axios'; 
 
-const BASE_URL='https://localhost:44300/';
+const BASE_URL='https://localhost:44300';
 
 class EmployeeService {
      getAllEmployee = () => {

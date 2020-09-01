@@ -5,6 +5,8 @@ import DisplayAppBar from '../utility/DisplayAppBar';
 import TextField from '@material-ui/core/TextField';
 import EmployeeService from '../service/EmployeeService';
 import { useLocation } from "react-router-dom";
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 export default function AddEmployee (props) {
 
@@ -19,13 +21,25 @@ export default function AddEmployee (props) {
 
     const [{id, firstname, lastname, email,password,phonenumber},setValues]=useState(initialState);
 
-    const handleValues = (event) => {
+	const [message,setMessage]=useState('');
+	
+    const [open,setOpen] = useState(false);
+	
+	const handleSnackbar = () => { 
+		setOpen(true);
+	}
+	
+	const handleClose = () => {
+		setOpen(false);
+	}
+	
+	const handleValues = (event) => {
         event.persist();
         setValues(values=>({...values,[event.target.name]: event.target.value}));
     }
 
-    const handleSave = () => {
-			
+    const handleSave = (event) => {
+		event.preventDefault();
 		const employeeData={
 			Name:firstname+ " " + lastname,
             Email:email,
@@ -33,22 +47,44 @@ export default function AddEmployee (props) {
             PhoneNumber:phonenumber
         }
 		
-		EmployeeService.addEmployee(employeeData).then((res) => {
-			console.log(res.data.data);
+		EmployeeService.editEmployee(employeeData).then((res) => {
+			if(res.data.data.httpstatuscode == 200){
+				setMessage(res.data.data.message);
+			}
+		})
+		.catch((err) => {
+			console.log(err);
+		})
+		handleSnackbar();
+        setValues({ ...initialState });
+    }
+
+    const handleUpdate = () => {
+        const employeeData={
+            Id:id,
+            Name:firstname+ " " + lastname,
+            Email:email,
+            Password:password,
+            PhoneNumber:phonenumber
+        }
+		
+		EmployeeService.updateEmployee(employeeData).then((res) => {
+			if(res.data.data.httpstatuscode == 200){
+				setMessage(res.data.data.message);
+			}
 		})
 		.catch((err) => {
 			console.log(err);
 		})
         setValues({ ...initialState });
     }
-
+ 
     const handleCancel = () => { setValues({ ...initialState }); }
     
 	const location = useLocation();
-	
+
 	useEffect(() => {
-		console.log(props.state);
-	},[location])
+	   },[location])
 	
 	return (
         <>
@@ -56,20 +92,20 @@ export default function AddEmployee (props) {
                 <div className="employee_title">
 				    <DisplayAppBar title='Greeting App'/>
 			    </div>
-                <div className="space"></div>
+                <div className="space">
+					<Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+						<MuiAlert severity="success">
+							This is a success message!
+						</MuiAlert>
+					</Snackbar>
+				</div>
                 <div className="child_container">
                    <div className="div_content">
                         <span className="employee_title">{window.location.href.includes('add')? 'Add Employee' : 'Update Employee'}</span>
                     </div>
                     <div className="space"></div>
-                    <form id="baseForm" onSubmit={handleSave} onReset={handleCancel}>
+                    <form id="baseForm" onSubmit={window.location.href.includes('add')? handleSave : handleUpdate} onReset={handleCancel}>
 						<div className="div_content">
-                            <TextField name="id" label="ID" variant="outlined" value={id}
-                                onChange={handleValues}  size="small" style={{display:window.location.href.includes('add')? 'none' : 'block !impotant'}} required />
-                        </div>
-
-                        <div className="space" style={{display:window.location.href.includes('add')? 'none' : 'block !impotant'}}></div>
-                        <div className="div_content">
                             <TextField name="firstname" label="First Name" variant="outlined" value={firstname}
                                 onChange={handleValues}  size="small" required />
                         </div>
