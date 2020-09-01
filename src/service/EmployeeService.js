@@ -25,6 +25,14 @@ class EmployeeService {
          });
      }
 	 
+	 editEmployee = (employeeData) => {
+         return axios({
+             method:'PUT',
+			 data:employeeData,
+             url:`${BASE_URL}/api/employee`
+         });
+     }
+	 
 	 deleteEmployee = (id) => {
          return axios({
              method:'DELETE',
