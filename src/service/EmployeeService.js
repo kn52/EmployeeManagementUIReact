@@ -16,6 +16,14 @@ class EmployeeService {
              url:`${BASE_URL}/api/employee/${id}`
          });
      }
+	 
+	 addEmployee = (employeeData) => {
+         return axios({
+             method:'POST',
+			 data:employeeData,
+             url:`${BASE_URL}/api/employee`
+         });
+     }
 }
 
 export default new EmployeeService();
