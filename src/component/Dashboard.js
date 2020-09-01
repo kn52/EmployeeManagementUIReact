@@ -1,28 +1,55 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../css/DashBoard.css';
 import '../css/Employee.css';
-import Grid from '@material-ui/core/Grid';
+import history from "../utility/history";
 import DisplayData from './DisplayData';
 import DisplayAppBar from '../utility/DisplayAppBar';
-import DisplayButton from '../utility/DisplayButton';
+import Button from '@material-ui/core/Button';
 import Add from '../images/svg/Add.svg'
+import EmployeeService from '../service/EmployeeService';
 
 export default function DashBoard () {
+
+	const [employeeData,setEmployeeData] = React.useState([]);
+	
+	const handleAddEmployee = () => {
+		history.push({
+			pathname:'/employee/add',
+			state:{data:''}
+		});
+	}
+	
+	const getEmployeeData = () => {
+		EmployeeService.getAllEmployee().then((res) => {
+			console.log(res.data.data);
+			setEmployeeData(res.data.data);
+		})
+		.catch((err) => {
+			console.log(err);
+		})
+	}
+	
+	useEffect(()=> {
+		getEmployeeData();	
+	},[]);
+
 	return (
-		<Grid container spacing = {0} xs = {12} >
-			<Grid item xs = {12} className='add_employee'>
-				<DisplayAppBar />
-			</Grid>
-			<Grid item xs = {12} className='employee'></Grid>
-			<Grid item xs = {12} className='add_employee'>
-				<DisplayButton imag={Add} imageclass='image_icon'  buttonclass='add_employee_button font_family' txt='Add Employee' />
-			</Grid>
-			<Grid item xs = {12} className='employee'></Grid>
-			<Grid item xs = {12} className='add_employee'>
-				<Grid item xs = {10} className='add_employee'>
-					<DisplayData />
-				</Grid>
-			</Grid>
-		</Grid>
+		<>
+			<div className="employee_child_title">
+				<DisplayAppBar title='Greeting App'/>
+			</div>
+			<div id="employee_child_container">
+				<div className="employee"></div>
+				<div className="employee_child">
+					<Button variant = "contained" color = "primary" 
+						startIcon={<img src={Add} alt="" className='image_icon'/>} 
+						className='employee_add_button font_family' onClick={handleAddEmployee}>Add Employee</Button>
+				</div>
+				<div className="employee">{message}</div>
+				<div className="employee_child_table">
+					<DisplayData data={employeeData} edit={handleEdit} del={handleDelete}/>
+				</div>
+			</div>
+		</>
 	);
 }

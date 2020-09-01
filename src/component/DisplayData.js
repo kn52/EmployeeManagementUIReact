@@ -8,7 +8,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import DisplayButton from '../utility/DisplayButton';
+import Button from '@material-ui/core/Button';
 import Edit from '../images/svg/Edit.svg';
 import Delete from '../images/svg/Delete.svg';
 
@@ -16,13 +16,13 @@ const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.white,
     color: theme.palette.common.black,
-	fontFamily: 'cambria',
-	fontSize: 22,
-	fontWeight: 'bold'
-  },
+	  fontFamily: 'cambria',
+    fontSize: 20,
+    fontWeight: 'bold'
+	},
   body: {
-    fontSize: 16,
-	fontFamily: 'Cambria',
+    fontSize: 18,
+	  fontFamily: 'Cambria',
   },
 }))(TableCell);
 
@@ -34,31 +34,34 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow);
 
-function createData(firstname, lastname, email) {
-  return { firstname, lastname, email };
+function createData(id, name, email) {
+  return { id, name, email };
 }
 
-const rows = [
-  createData('James', 'Warner', 'james.warner@gmail.com'),
-  createData('Stephen', 'Hawking', 'stephen@gmail.co.in'),
+const rows = [ 
+	createData('aa','bb','cc'),
+		createData('dd','ee','ff')
 ];
 
 const useStyles = makeStyles({
   table: {
-    minWidth: 600,
+    Width: 400,
+    Height:100
   },
 });
 
-export default function CustomizedTables() {
+
+
+export default function DisplayData (props) {
   const classes = useStyles();
 
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="customized table">
+    <TableContainer className={classes.table}component={Paper}>
+      <Table aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell style={{fontFamily:"cambria"}}>First Name</StyledTableCell>
-            <StyledTableCell align="left" style={{fontFamily:"cambria"}}>Last Name</StyledTableCell>
+            <StyledTableCell style={{fontFamily:"cambria"}}>ID</StyledTableCell>
+            <StyledTableCell align="left" style={{fontFamily:"cambria"}}>Name</StyledTableCell>
             <StyledTableCell align="left">Email</StyledTableCell>
             <StyledTableCell align="left">Edit</StyledTableCell>
             <StyledTableCell align="left">Delete</StyledTableCell>
@@ -67,13 +70,14 @@ export default function CustomizedTables() {
         <TableBody>
           {rows.map((row) => (
             <StyledTableRow key={row.name}>
-              <StyledTableCell component="th" scope="row">
-                {row.firstname}
-              </StyledTableCell>
-              <StyledTableCell align="left">{row.lastname}</StyledTableCell>
+              <StyledTableCell component="th" scope="row">{row.id}</StyledTableCell>
+              <StyledTableCell align="left">{row.name}</StyledTableCell>
               <StyledTableCell align="left">{row.email}</StyledTableCell>
-              <StyledTableCell align="left"><DisplayButton imag={Edit} imageclass='image_icon'  buttonclass='font_family' txt='' /></StyledTableCell>
-              <StyledTableCell align="left"><DisplayButton imag={Delete} imageclass='image_icon'  buttonclass='font_family' txt='' /></StyledTableCell>
+              <StyledTableCell align="left">
+			  <Button variant = "contained" color = "primary" className='font_family' onClick={()=>props.edit(row)}>
+				<img src={Edit} alt="" className='image_icon'/></Button></StyledTableCell>
+              <StyledTableCell align="left"><Button variant = "contained" color = "primary" className='font_family' onClick={()=>props.del(row.id)}>
+				<img src={Delete} alt="" className='image_icon'/></Button></StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

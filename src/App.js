@@ -1,11 +1,15 @@
 import React, { Component} from 'react';
 import './App.css';
 import './greetingData.json'
-import DashBoard from "./component/DashBoard";
+import DefaultRoute from './route/DefaultRoute';
 
 export default class App extends Component{
 	
 	render() {
-		return (<DashBoard/>);
+		return (
+			<div className="employee-container">
+				<DefaultRoute/>
+			</div>
+		);
 	}
 }
