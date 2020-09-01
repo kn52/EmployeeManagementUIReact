@@ -29,6 +29,18 @@ export default function DashBoard () {
 		})
 	}
 	
+	const handleDelete = (employeeId) => {
+		EmployeeService.deleteEmployee(employeeId).then((res) => {
+			console.log(res.data.data);
+		})
+		.catch((err) => {
+			console.log(err);
+		})
+		getEmployeeData();
+	}
+	
+	let message = "";
+	
 	useEffect(()=> {
 		getEmployeeData();	
 	},[]);
@@ -47,7 +59,7 @@ export default function DashBoard () {
 				</div>
 				<div className="employee">{message}</div>
 				<div className="employee_child_table">
-					<DisplayData data={employeeData} edit={handleEdit} del={handleDelete}/>
+					<DisplayData data={employeeData} del={handleDelete}/>
 				</div>
 			</div>
 		</>
