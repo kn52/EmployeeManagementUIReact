@@ -19,6 +19,14 @@ export default function DashBoard () {
 		});
 	}
 	
+	const handleEdit = (employee) => {
+		console.log(employee);
+		history.push({
+			pathname:'/employee/edit',
+			state: {data : employee}
+		});
+	}
+	
 	const getEmployeeData = () => {
 		EmployeeService.getAllEmployee().then((res) => {
 			console.log(res.data.data);
@@ -59,7 +67,7 @@ export default function DashBoard () {
 				</div>
 				<div className="employee">{message}</div>
 				<div className="employee_child_table">
-					<DisplayData data={employeeData} del={handleDelete}/>
+					<DisplayData data={employeeData} edit={handleEdit} del={handleDelete}/>
 				</div>
 			</div>
 		</>
