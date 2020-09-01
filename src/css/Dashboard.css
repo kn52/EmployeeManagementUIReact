@@ -58,15 +58,3 @@
 	width:calc(100vw-85px); 
 	height:calc(100vh-88px);
 }
-
-@media only screen and (max-width: 1125px) {
-	.employee_add_button {
-		font-size:80% !important;
-	}
-}
-
-@media only screen and (max-width: 415px) {
-	.employee_add_button {
-		font-size:50% !important;
-	}
-}
