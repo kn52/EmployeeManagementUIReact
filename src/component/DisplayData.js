@@ -68,7 +68,7 @@ export default function DisplayData (props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {props.data.map((row) => (
             <StyledTableRow key={row.name}>
               <StyledTableCell component="th" scope="row">{row.id}</StyledTableCell>
               <StyledTableCell align="left">{row.name}</StyledTableCell>

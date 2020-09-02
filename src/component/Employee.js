@@ -3,6 +3,7 @@ import '../css/EmployeeDetail.css';
 import Button from '@material-ui/core/Button';
 import DisplayAppBar from '../utility/DisplayAppBar';
 import TextField from '@material-ui/core/TextField';
+import DisplaySnackBar from '../utility/DisplaySnackBar';
 import EmployeeService from '../service/EmployeeService';
 import { useLocation } from "react-router-dom";
 import Snackbar from '@material-ui/core/Snackbar';
@@ -21,7 +22,10 @@ export default function AddEmployee (props) {
 
     const [{id, firstname, lastname, email,password,phonenumber},setValues]=useState(initialState);
 
-	const [message,setMessage]=useState('');
+	const [{message,type},setMessage]=useState({
+		message:'',
+		type:''
+	});
 	
     const [open,setOpen] = useState(false);
 	
@@ -39,6 +43,17 @@ export default function AddEmployee (props) {
     }
 
     const handleSave = (event) => {
+		if(window.location.href.includes('add')){
+			handleAddEmployee(event);
+		}
+		else{
+			handleEditEmployee(event);
+		}
+		handleSnackbar();
+        setValues({ ...initialState });
+    }
+
+	const handleSave = (event) => {
 		event.preventDefault();
 		const employeeData={
 			Name:firstname+ " " + lastname,
@@ -93,11 +108,7 @@ export default function AddEmployee (props) {
 				    <DisplayAppBar title='Greeting App'/>
 			    </div>
                 <div className="space">
-					<Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
-						<MuiAlert severity="success">
-							This is a success message!
-						</MuiAlert>
-					</Snackbar>
+					<DisplaySnackBar opn={open} onclose={handleClose} msg={message} msgtype={type}/>
 				</div>
                 <div className="child_container">
                    <div className="div_content">

@@ -39,11 +39,11 @@ export default function DashBoard () {
 	const handleDelete = (employeeId) => {
 		EmployeeService.deleteEmployee(employeeId).then((res) => {
 			console.log(res.data.data);
+			getEmployeeData();
 		})
 		.catch((err) => {
 			console.log(err);
 		})
-		getEmployeeData();
 	}
 	
 	let message = "";

@@ -18,6 +18,7 @@ class EmployeeService {
      }
 	 
 	 addEmployee = (employeeData) => {
+		 console.log(employeeData);
          return axios({
              method:'POST',
 			 data:employeeData,
