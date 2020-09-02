@@ -45,3 +45,34 @@
 	width:200px;
 	height:40px;
 }
+
+@media only screen and (max-width: 1125px) {
+	.child_container {
+		width:40vw;
+		min-height:80vh;
+	}
+	
+	.div_content {
+		width:30vw;
+	}
+}
+
+@media only screen and (max-width: 490px) {
+	.child_container {
+		width:75vw;
+		min-height:90vh;
+	}
+	
+	.div_content {
+		width:60vw;
+	}
+	
+	.employee_button {
+		width:150px;
+	}
+	
+	.employee_title {
+		font-size:21px;
+		background-color:#3f51b5;
+	}
+}
