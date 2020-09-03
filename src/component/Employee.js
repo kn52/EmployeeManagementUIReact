@@ -42,56 +42,65 @@ export default function AddEmployee (props) {
         setValues(values=>({...values,[event.target.name]: event.target.value}));
     }
 
-    const handleSave = (event) => {
-		if(window.location.href.includes('add')){
-			handleAddEmployee(event);
-		}
-		else{
-			handleEditEmployee(event);
-		}
-		handleSnackbar();
-        setValues({ ...initialState });
-    }
-
-	const handleSave = (event) => {
+    const handleAddEmployee = (event) => {
+		console.log("addemployee");
 		event.preventDefault();
 		const employeeData={
-			Name:firstname+ " " + lastname,
+			Name:firstname.concat(" " + lastname),
+            Email:email,
+            Password:password,
+            PhoneNumber:phonenumber
+        }
+		
+		EmployeeService.addEmployee(employeeData).then((res) => {
+			if(res.data.httpstatuscode == 200 || res.data.httpstatuscode == 302){
+				console.log("addemployee-success");
+				setMessage({type:'success'})
+				setMessage({message:res.data.message});
+			}
+			else{
+				console.log("addemployee-fail");
+				setMessage({type:'info'})
+				setMessage({message:res.data.message});
+			}
+		})
+		.catch((err) => {
+			console.log("addemployee-error");
+			setMessage({type:'error'})
+			setMessage({message:'Bad Request'});
+			console.log(err);
+		})
+	}
+
+    const handleEditEmployee = (event) => {
+		console.log("editemployee");
+		event.preventDefault();
+        const employeeData={
+            Id:id,
+            Name:firstname.concat(" " + lastname),
             Email:email,
             Password:password,
             PhoneNumber:phonenumber
         }
 		
 		EmployeeService.editEmployee(employeeData).then((res) => {
-			if(res.data.data.httpstatuscode == 200){
-				setMessage(res.data.data.message);
+			if(res.data.httpstatuscode == 200 || res.data.httpstatuscode == 302){
+				console.log("editemployee-success");
+				setMessage({type:'success'})
+				setMessage({message:res.data.message});
+			}
+			else{
+				console.log("editemployee-fail");
+				setMessage({type:'info'})
+				setMessage({message:res.data.message});
 			}
 		})
 		.catch((err) => {
+			console.log("editemployee-err");
+			setMessage({type:'error'})
+			setMessage({message:'Bad Request'});
 			console.log(err);
-		})
-		handleSnackbar();
-        setValues({ ...initialState });
-    }
-
-    const handleUpdate = () => {
-        const employeeData={
-            Id:id,
-            Name:firstname+ " " + lastname,
-            Email:email,
-            Password:password,
-            PhoneNumber:phonenumber
-        }
-		
-		EmployeeService.updateEmployee(employeeData).then((res) => {
-			if(res.data.data.httpstatuscode == 200){
-				setMessage(res.data.data.message);
-			}
-		})
-		.catch((err) => {
-			console.log(err);
-		})
-        setValues({ ...initialState });
+		}) 
     }
  
     const handleCancel = () => { setValues({ ...initialState }); }
