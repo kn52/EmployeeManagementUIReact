@@ -6,8 +6,6 @@ import TextField from '@material-ui/core/TextField';
 import DisplaySnackBar from '../utility/DisplaySnackBar';
 import EmployeeService from '../service/EmployeeService';
 import { useLocation } from "react-router-dom";
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
 
 export default function AddEmployee (props) {
 
@@ -42,8 +40,18 @@ export default function AddEmployee (props) {
         setValues(values=>({...values,[event.target.name]: event.target.value}));
     }
 
-    const handleAddEmployee = (event) => {
-		console.log("addemployee");
+    const handleSave = (event) => {
+		if(window.location.href.includes('add')){
+			handleAddEmployee(event);
+		}
+		else{
+			handleEditEmployee(event);
+		}
+		handleSnackbar();
+        setValues({ ...initialState });
+    }
+
+	const handleAddEmployee = (event) => {
 		event.preventDefault();
 		const employeeData={
 			Name:firstname.concat(" " + lastname),
@@ -54,18 +62,15 @@ export default function AddEmployee (props) {
 		
 		EmployeeService.addEmployee(employeeData).then((res) => {
 			if(res.data.httpstatuscode == 200 || res.data.httpstatuscode == 302){
-				console.log("addemployee-success");
 				setMessage({type:'success'})
 				setMessage({message:res.data.message});
 			}
 			else{
-				console.log("addemployee-fail");
 				setMessage({type:'info'})
 				setMessage({message:res.data.message});
 			}
 		})
 		.catch((err) => {
-			console.log("addemployee-error");
 			setMessage({type:'error'})
 			setMessage({message:'Bad Request'});
 			console.log(err);
@@ -73,7 +78,6 @@ export default function AddEmployee (props) {
 	}
 
     const handleEditEmployee = (event) => {
-		console.log("editemployee");
 		event.preventDefault();
         const employeeData={
             Id:id,
@@ -85,18 +89,15 @@ export default function AddEmployee (props) {
 		
 		EmployeeService.editEmployee(employeeData).then((res) => {
 			if(res.data.httpstatuscode == 200 || res.data.httpstatuscode == 302){
-				console.log("editemployee-success");
 				setMessage({type:'success'})
 				setMessage({message:res.data.message});
 			}
 			else{
-				console.log("editemployee-fail");
 				setMessage({type:'info'})
 				setMessage({message:res.data.message});
 			}
 		})
 		.catch((err) => {
-			console.log("editemployee-err");
 			setMessage({type:'error'})
 			setMessage({message:'Bad Request'});
 			console.log(err);
@@ -124,7 +125,7 @@ export default function AddEmployee (props) {
                         <span className="employee_title">{window.location.href.includes('add')? 'Add Employee' : 'Update Employee'}</span>
                     </div>
                     <div className="space"></div>
-                    <form id="baseForm" onSubmit={window.location.href.includes('add')? handleSave : handleUpdate} onReset={handleCancel}>
+                    <form id="baseForm" onSubmit={handleSave} onReset={handleCancel}>
 						<div className="div_content">
                             <TextField name="firstname" label="First Name" variant="outlined" value={firstname}
                                 onChange={handleValues}  size="small" required />
