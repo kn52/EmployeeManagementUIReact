@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -23,23 +23,13 @@ export default function DialogBox (props) {
 	
 	const classes = useStyles();
 	
-	const [selected,setSelectedValue]=useState('');
-	
-	const handleClickClose = (value) => {
-		setSelectedValue(value);
-		var qwe = {selected};
-		console.log(qwe);
-		if (false){
-			props.del(props.Id);
-		}
-		else{
-			props.onclose();
-		}
+	const handleClose = () => {
+		props.onclose(props.id);
 	}
 	
 	return(
 		<>
-		  <Dialog open={props.opn} onClose={handleClickClose}>
+		  <Dialog open={props.opn} onClose={handleClose}>
 			<DialogTitle className="dialog_title"><img src={Question} alt='' className="dialogbox_image_icon"/></DialogTitle>
 			<DialogContent>
 			<DialogContentText>
@@ -47,10 +37,10 @@ export default function DialogBox (props) {
 			</DialogContentText>
 			</DialogContent>
 			<DialogActions className="dialog_action">
-				<Button onClick={handleClickClose("approved")} className={classes.buttonColor}>
+				<Button onClick={handleClose} className={classes.buttonColor}>
 					<img src={Approved} alt='' className="approved_image_icon"/>
 				</Button>
-				<Button onClick={handleClickClose("cancel")} className={classes.buttonColor}>
+				<Button onClick={handleClose} className={classes.buttonColor}>
 					<img src={Cancel} alt='' className="cancel_image_icon"/>
 				</Button>
 			</DialogActions>

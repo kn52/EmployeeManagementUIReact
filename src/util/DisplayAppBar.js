@@ -27,14 +27,12 @@ export default function DisplayAppBar (props) {
 
     const classes = useStyles();
     
-	const [loginText,setLoginText] = useState('Login');
-	
-    const handleLogin = () => {
-        history.push({
+	const handleLogin = () => {
+		history.push({
           pathname:'/employee/login',
           state:''
         })
-    }
+	}
 	
 	const handleBack = () => {
         history.push({
@@ -43,6 +41,8 @@ export default function DisplayAppBar (props) {
         })
     }
 
+	let loginText = 'Login';
+	
     return (      
       <div className={classes.root}>
         <AppBar position="static">

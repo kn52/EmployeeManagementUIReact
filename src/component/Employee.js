@@ -56,7 +56,8 @@ export default function AddEmployee (props) {
 	const handleAddEmployee = (event) => {
 		event.preventDefault();
 		const employeeData={
-			Name:firstname.concat(" " + lastname),
+			FirstName:firstname,
+			LastName:lastname,
             Email:email,
             Password:password,
             PhoneNumber:phonenumber
@@ -83,8 +84,9 @@ export default function AddEmployee (props) {
 		event.preventDefault();
         const employeeData={
             Id:props.location.state.data.id,
-            Name:firstname.concat(" " + lastname),
-            Email:email,
+            FirstName:firstname,
+			LastName:lastname,
+			Email:email,
             Password:password,
             PhoneNumber:phonenumber
         }
@@ -110,12 +112,14 @@ export default function AddEmployee (props) {
     
 	const location = useLocation();
 
-	const setForm = (data) => {
+	const setForm = (response) => {
+		console.log(response);
 		setValues({
-			firstname:props.location.state.data.name,
-			email:props.location.state.data.email,
-			password:props.location.state.data.password,
-			phonenumber:props.location.state.data.phoneNumber,
+			firstname:response.firstName,
+			lastname:props.location.state.data.lastName,
+			email:response.email,
+			password:response.password,
+			phonenumber:response.phoneNumber,
 			});
 	}
 
@@ -123,7 +127,10 @@ export default function AddEmployee (props) {
 		
 		var employeeId = props.location.state.data.id;
 		EmployeeService.getEmployeeById(employeeId).then((res) => {
-			setForm();
+			if (res.data.httpStatusCode === 302){
+				console.log("Hi");
+				setForm(res.data.data);
+			}
 		})
 		.catch((err) => {
 			console.log(err);
@@ -167,8 +174,8 @@ export default function AddEmployee (props) {
                         <div className="space"></div>
 
                         <div className="div_content">
-							<TextField name="password" label="password" type="text" variant="outlined" value={password}
-                                onChange={handleValues}  size="small" style={{width:"100%"}} required />
+							<TextField name="password" label="password" type="password" variant="outlined" value={password}
+                                onChange={handleValues}  size="small" disabled={window.location.href.includes('add')? false : true} style={{width:"100%"}} required />
                         </div>
 
                         <div className="space"></div>
