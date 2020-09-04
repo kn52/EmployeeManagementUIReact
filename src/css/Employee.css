@@ -7,6 +7,11 @@
 	height:3vh;
 }
 
+.appbar_image_icon {
+	width:3vw !important; 
+	height:4vh !important;
+}
+
 .greeting_image_icon {
 	width:40px; 
 	height:40px;

@@ -22,10 +22,12 @@
 }
 
 .employee_child_table {
-	height:30%;
-	width:60%;
+	height:65vh;
+	width:70%;
+	overflow:auto;
 	padding-left: 10%;
 }
+
 .error_message {
 	font-family:Cambria;
 	font-weight:bold;
@@ -55,13 +57,13 @@
 
 .employee_add_button {
 	font-size:100% !important;
-	width:calc(100vw-85px); 
-	height:calc(100vh-88px);
+	width:calc(100vw-80px); 
+	height:calc(100vh-85px);
 }
 
 @media only screen and (max-width: 1125px) {
 	.employee_add_button {
-		font-size:80% !important;
+		font-size:90% !important;
 	}
 }
 

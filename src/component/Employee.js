@@ -25,7 +25,7 @@ export default function AddEmployee (props) {
 		type:''
 	});
 	
-    const [open,setOpen] = useState(false);
+	const [open,setOpen] = useState(false);
 	
 	const handleSnackbar = () => { 
 		setOpen(true);
@@ -128,9 +128,6 @@ export default function AddEmployee (props) {
 		.catch((err) => {
 			console.log(err);
 		})
-		
-		console.log(props.location.state.data);
-		console.log(firstname);
 		},[props.location.state.data])
 	
 	
@@ -170,8 +167,8 @@ export default function AddEmployee (props) {
                         <div className="space"></div>
 
                         <div className="div_content">
-                            <TextField name="password" label="Password" type="password" variant="outlined" value={password}
-                                onChange={handleValues} size="small" style={{width:"100%"}}required />
+							<TextField name="password" label="password" type="text" variant="outlined" value={password}
+                                onChange={handleValues}  size="small" style={{width:"100%"}} required />
                         </div>
 
                         <div className="space"></div>
