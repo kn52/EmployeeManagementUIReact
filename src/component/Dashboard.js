@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react';
 import '../css/DashBoard.css';
 import '../css/Employee.css';
-import history from '../utility/history';
 import DisplayData from './DisplayData';
-import DisplayAppBar from '../utility/DisplayAppBar';
+import DisplayAppBar from '../util/DisplayAppBar';
 import Button from '@material-ui/core/Button';
 import Add from '../images/svg/Add.svg'
+import { useHistory } from 'react-router-dom';
 import EmployeeService from '../service/EmployeeService';
 
 export default function DashBoard () {
+
+	const history = useHistory();
 
 	const [employeeData,setEmployeeData] = React.useState([]);
 	
@@ -38,7 +40,6 @@ export default function DashBoard () {
 	
 	const handleDelete = (employeeId) => {
 		EmployeeService.deleteEmployee(employeeId).then((res) => {
-			console.log(res.data.data);
 			getEmployeeData();
 		})
 		.catch((err) => {

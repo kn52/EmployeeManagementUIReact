@@ -48,8 +48,15 @@
 
 @media only screen and (max-width: 1125px) {
 	.child_container {
-		width:40vw;
-		min-height:80vh;
+		width: 40vw;
+		min-height: 55vh;
+	}
+}
+
+@media only screen and (max-width: 1120px) {
+	.child_container {
+		width: 40vw;
+		min-height: 70vh;
 	}
 	
 	.div_content {
@@ -60,7 +67,7 @@
 @media only screen and (max-width: 490px) {
 	.child_container {
 		width:75vw;
-		min-height:90vh;
+		min-height:70vh;
 	}
 	
 	.div_content {

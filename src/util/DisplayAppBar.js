@@ -6,6 +6,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,9 +21,18 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DisplayAppBar (props) {
  
+    const history = useHistory();
+
     const classes = useStyles();
-    return (
-      
+    
+    const handleLogin = () => {
+        history.push({
+          pathname:'/employee/login',
+          state:''
+        })
+    }
+
+    return (      
       <div className={classes.root}>
         <AppBar position="static">
           <Toolbar>
@@ -30,6 +41,7 @@ export default function DisplayAppBar (props) {
             <Typography variant="h5" className={classes.title}>
               {props.title}
             </Typography>
+            <Button color="inherit" onClick={handleLogin}>Login</Button>
           </Toolbar>
         </AppBar>
       </div>

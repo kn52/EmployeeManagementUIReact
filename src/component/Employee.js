@@ -1,16 +1,16 @@
 import React, {useState, useEffect} from 'react';
 import '../css/EmployeeDetail.css';
 import Button from '@material-ui/core/Button';
-import DisplayAppBar from '../utility/DisplayAppBar';
+import DisplayAppBar from '../util/DisplayAppBar';
 import TextField from '@material-ui/core/TextField';
-import DisplaySnackBar from '../utility/DisplaySnackBar';
+import DisplaySnackBar from '../util/DisplaySnackBar';
 import EmployeeService from '../service/EmployeeService';
 import { useLocation } from "react-router-dom";
 
 export default function AddEmployee (props) {
 
-    const initialState = { 
-        id:'',    
+    const initialState = {
+		Id:0,
         firstname:'', 
         lastname:'',
         email:'',
@@ -18,7 +18,7 @@ export default function AddEmployee (props) {
         phonenumber:'' 
     }
 
-    const [{id, firstname, lastname, email,password,phonenumber},setValues]=useState(initialState);
+    const [{Id,firstname, lastname, email,password,phonenumber},setValues]=useState(initialState);
 
 	const [{message,type},setMessage]=useState({
 		message:'',
@@ -41,10 +41,12 @@ export default function AddEmployee (props) {
     }
 
     const handleSave = (event) => {
-		if(window.location.href.includes('add')){
+        if(window.location.href.includes('add'))
+        {
 			handleAddEmployee(event);
 		}
-		else{
+        else
+        {
 			handleEditEmployee(event);
 		}
 		handleSnackbar();
@@ -61,7 +63,7 @@ export default function AddEmployee (props) {
         }
 		
 		EmployeeService.addEmployee(employeeData).then((res) => {
-			if(res.data.httpstatuscode == 200 || res.data.httpstatuscode == 302){
+			if(res.data.httpstatuscode === 200 || res.data.httpstatuscode === 302){
 				setMessage({type:'success'})
 				setMessage({message:res.data.message});
 			}
@@ -80,15 +82,15 @@ export default function AddEmployee (props) {
     const handleEditEmployee = (event) => {
 		event.preventDefault();
         const employeeData={
-            Id:id,
+            Id:props.location.state.data.id,
             Name:firstname.concat(" " + lastname),
             Email:email,
             Password:password,
             PhoneNumber:phonenumber
         }
-		
+		console.log(employeeData);
 		EmployeeService.editEmployee(employeeData).then((res) => {
-			if(res.data.httpstatuscode == 200 || res.data.httpstatuscode == 302){
+			if(res.data.httpstatuscode === 200 || res.data.httpstatuscode === 302){
 				setMessage({type:'success'})
 				setMessage({message:res.data.message});
 			}
@@ -108,8 +110,29 @@ export default function AddEmployee (props) {
     
 	const location = useLocation();
 
+	const setForm = (data) => {
+		setValues({
+			firstname:props.location.state.data.name,
+			email:props.location.state.data.email,
+			password:props.location.state.data.password,
+			phonenumber:props.location.state.data.phoneNumber,
+			});
+	}
+
 	useEffect(() => {
-	   },[location])
+		
+		var employeeId = props.location.state.data.id;
+		EmployeeService.getEmployeeById(employeeId).then((res) => {
+			setForm();
+		})
+		.catch((err) => {
+			console.log(err);
+		})
+		
+		console.log(props.location.state.data);
+		console.log(firstname);
+		},[props.location.state.data])
+	
 	
 	return (
         <>
@@ -127,34 +150,34 @@ export default function AddEmployee (props) {
                     <div className="space"></div>
                     <form id="baseForm" onSubmit={handleSave} onReset={handleCancel}>
 						<div className="div_content">
-                            <TextField name="firstname" label="First Name" variant="outlined" value={firstname}
+                            <TextField name="firstname" label="First Name" type="text" variant="outlined" value={firstname}
                                 onChange={handleValues}  size="small" required />
                         </div>
 
                         <div className="space"></div>
 
                         <div className="div_content">
-                            <TextField name="lastname" label="Last Name" variant="outlined" value={lastname}
+                            <TextField name="lastname" label="Last Name" type="text" variant="outlined" value={lastname}
                                 onChange={handleValues} size="small" required />
                         </div>
                         <div className="space"></div>
 
                         <div className="div_content">
-                            <TextField name="email" label="Email" variant="outlined" value={email}
-                                onChange={handleValues} size="small" required />
-                        </div>
-
-                        <div className="space"></div>
-
-                        <div className="div_content">
-                            <TextField name="password" label="Password" variant="outlined" value={password}
+                            <TextField name="email" label="Email" type="text" variant="outlined" value={email}
                                 onChange={handleValues} size="small" required />
                         </div>
 
                         <div className="space"></div>
 
                         <div className="div_content">
-                            <TextField name="phonenumber" label="Phone Number" variant="outlined" value={phonenumber}
+                            <TextField name="password" label="Password" type="password" variant="outlined" value={password}
+                                onChange={handleValues} size="small" style={{width:"100%"}}required />
+                        </div>
+
+                        <div className="space"></div>
+
+                        <div className="div_content">
+                            <TextField name="phonenumber" label="Phone Number" type="text" variant="outlined" value={phonenumber}
                                 onChange={handleValues} size="small" required />
                         </div>
 

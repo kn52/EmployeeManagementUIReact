@@ -1,10 +1,13 @@
 import React, {useState} from 'react';
 import '../css/Login.css';
-import DisplayAppBar from '../utility/DisplayAppBar';
+import DisplayAppBar from '../util/DisplayAppBar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import { useHistory } from 'react-router-dom';
 
 export default function Login () {
+
+    const history = useHistory();
 
     const initialState = { 
         email:'',
@@ -20,6 +23,9 @@ export default function Login () {
 
     const handleSave = () => {
         setValues({ ...initialState });
+        history.push({
+            pathname:'/'
+        })
     }
 
     const handleCancel = () => { setValues({ ...initialState }); }

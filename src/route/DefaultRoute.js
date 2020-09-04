@@ -1,6 +1,6 @@
 import {Router, Route, Switch} from 'react-router-dom';
 import React from 'react';
-import history from '../utility/history';
+import history from './history';
 import Employee from '../component/Employee';
 import DashBoard from '../component/DashBoard';
 import Login from '../component/Login';

@@ -16,13 +16,13 @@ const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.white,
     color: theme.palette.common.black,
-	  fontFamily: 'cambria',
+	fontFamily: 'cambria',
     fontSize: 20,
     fontWeight: 'bold'
 	},
   body: {
     fontSize: 18,
-	  fontFamily: 'Cambria',
+	fontFamily: 'Cambria',
   },
 }))(TableCell);
 
@@ -34,29 +34,27 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow);
 
+const useStyles = makeStyles({
+  table: {
+    Width: 400,
+    height:10
+  },
+});
+
 function createData(id, name, email) {
   return { id, name, email };
 }
 
 const rows = [ 
 	createData('aa','bb','cc'),
-		createData('dd','ee','ff')
+	createData('dd','ee','ff')
 ];
-
-const useStyles = makeStyles({
-  table: {
-    Width: 400,
-    Height:100
-  },
-});
-
-
 
 export default function DisplayData (props) {
   const classes = useStyles();
 
   return (
-    <TableContainer className={classes.table}component={Paper}>
+    <TableContainer component={Paper}>
       <Table aria-label="customized table">
         <TableHead>
           <TableRow>
@@ -74,11 +72,11 @@ export default function DisplayData (props) {
               <StyledTableCell align="left">{row.name}</StyledTableCell>
               <StyledTableCell align="left">{row.email}</StyledTableCell>
               <StyledTableCell align="left">
-			  <Button variant = "contained" color = "primary" className='font_family' onClick={()=>props.edit(row.id)}>
+			  <Button variant = "contained" color = "primary" className='font_family' onClick={()=>props.edit(row)}>
 				<img src={Edit} alt="" className='image_icon'/></Button></StyledTableCell>
               <StyledTableCell align="left"><Button variant = "contained" color = "primary" className='font_family' onClick={()=>{
 				  if(window.confirm('Delete the record'))
-			  {props.del(row.id)}}}>
+			  {rows(row.id)}}}>
 				<img src={Delete} alt="" className='image_icon'/></Button></StyledTableCell>
             </StyledTableRow>
           ))}

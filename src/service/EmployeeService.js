@@ -1,45 +1,36 @@
-import axios from 'axios'; 
+import axiosservice from './AxiosService'; 
 
 const BASE_URL='https://localhost:44300';
 
 class EmployeeService {
-     getAllEmployee = () => {
-		 return axios({
-             method:'GET',
-             url:`${BASE_URL}/api/employee`
-         });
-     }
+
+    constructor(){
+        this.axiosservice = new axiosservice();
+    }
+    getAllEmployee = () => {
+        let url = BASE_URL + `/api/employee`;
+        return this.axiosservice.get(url);   
+	}
 	 
-	 getEmployeeById = (id) => {
-		 return axios({
-             method:'GET',
-             url:`${BASE_URL}/api/employee/${id}`
-         });
-     }
+	getEmployeeById = (id) => {
+        let url = BASE_URL + `/api/employee/${id}`;
+        return this.axiosservice.get(url);
+	}
 	 
-	 addEmployee = (employeeData) => {
-		 console.log(employeeData);
-         return axios({
-             method:'POST',
-			 data:employeeData,
-             url:`${BASE_URL}/api/employee`
-         });
-     }
+	addEmployee = (employeeData) => {
+        let url = BASE_URL + `/api/employee`
+        return this.axiosservice.post(url,employeeData);
+    }
 	 
-	 editEmployee = (employeeData) => {
-         return axios({
-             method:'PUT',
-			 data:employeeData,
-             url:`${BASE_URL}/api/employee`
-         });
-     }
+	editEmployee = (employeeData) => {
+        let url = BASE_URL + `/api/employee`;
+        return this.axiosservice.put(url,employeeData);
+    }
 	 
-	 deleteEmployee = (id) => {
-         return axios({
-             method:'DELETE',
-             url:`${BASE_URL}/api/employee/${id}`
-         });
-     }
+	deleteEmployee = (id) => {
+        let url = BASE_URL + `/api/employee/${id}`
+        return this.axiosservice.delete(url);
+    }
 }
 
 export default new EmployeeService();
