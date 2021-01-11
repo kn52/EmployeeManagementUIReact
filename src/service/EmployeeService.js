@@ -1,6 +1,6 @@
 import axiosservice from './AxiosService'; 
 
-const BASE_URL='https://localhost:44300';
+const BASE_URL=process.env.REACT_APP_BASE_URL;
 
 class EmployeeService {
 

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import '../css/DashBoard.css';
+import '../css/Dashboard.css';
 import '../css/Employee.css';
 import DisplayData from './DisplayData';
 import DisplayDialogBox from '../util/DisplayDialogBox';
@@ -15,15 +15,8 @@ export default function DashBoard () {
 
 	const [employeeData,setEmployeeData] = React.useState([]);
 	
-	const [open, setOpen] = React.useState(true);
-
-	const handleClickOpen = (employeeId) => {
-		setOpen(true);
-	};
-
 	const handleClose = (employeeId) => {
 		console.log("Close "+ employeeId);
-		setOpen(false);
 		handleDelete(employeeId);
 	};
 	
@@ -42,23 +35,15 @@ export default function DashBoard () {
 		});
 	}
 	
-	const getEmployeeData = () => {
-		EmployeeService.getAllEmployee().then((res) => {
-			setEmployeeData(res.data.data);
-		})
-		.catch((err) => {
-			console.log(err);
-		})
+	const getEmployeeData = async () => {
+		let res=await EmployeeService.getAllEmployee();
+		setEmployeeData(res.data.data);
 	}
 	
-	const handleDelete = (employeeId) => {
+	const handleDelete =  async (employeeId) => {
 		console.log("Delete "+ employeeId);
-		EmployeeService.deleteEmployee(employeeId).then((res) => {
-			getEmployeeData();
-		})
-		.catch((err) => {
-			console.log(err);
-		})
+		await EmployeeService.deleteEmployee(employeeId);
+		getEmployeeData();
 	}
 	
 	let message = "";

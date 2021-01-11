@@ -5,7 +5,6 @@ import DisplayAppBar from '../util/DisplayAppBar';
 import TextField from '@material-ui/core/TextField';
 import DisplaySnackBar from '../util/DisplaySnackBar';
 import EmployeeService from '../service/EmployeeService';
-import { useLocation } from "react-router-dom";
 
 export default function AddEmployee (props) {
 
@@ -20,10 +19,7 @@ export default function AddEmployee (props) {
 
     const [{Id,firstname, lastname, email,password,phonenumber},setValues]=useState(initialState);
 
-	const [{message,type},setMessage]=useState({
-		message:'',
-		type:''
-	});
+	const [{message,type},setMessage]=useState({message:'',type:''});
 	
 	const [open,setOpen] = useState(false);
 	
@@ -36,6 +32,7 @@ export default function AddEmployee (props) {
 	}
 	
 	const handleValues = (event) => {
+		console.log(Id);
         event.persist();
         setValues(values=>({...values,[event.target.name]: event.target.value}));
     }
@@ -53,7 +50,7 @@ export default function AddEmployee (props) {
         setValues({ ...initialState });
     }
 
-	const handleAddEmployee = (event) => {
+	const handleAddEmployee = async (event) => {
 		event.preventDefault();
 		const employeeData={
 			FirstName:firstname,
@@ -63,7 +60,7 @@ export default function AddEmployee (props) {
             PhoneNumber:phonenumber
         }
 		
-		EmployeeService.addEmployee(employeeData).then((res) => {
+		await EmployeeService.addEmployee(employeeData).then((res) => {
 			if(res.data.httpstatuscode === 200 || res.data.httpstatuscode === 302){
 				setMessage({type:'success'})
 				setMessage({message:res.data.message});
@@ -80,7 +77,7 @@ export default function AddEmployee (props) {
 		})
 	}
 
-    const handleEditEmployee = (event) => {
+    const handleEditEmployee = async (event) => {
 		event.preventDefault();
         const employeeData={
             Id:props.location.state.data.id,
@@ -90,8 +87,7 @@ export default function AddEmployee (props) {
             Password:password,
             PhoneNumber:phonenumber
         }
-		console.log(employeeData);
-		EmployeeService.editEmployee(employeeData).then((res) => {
+		await EmployeeService.editEmployee(employeeData).then((res) => {
 			if(res.data.httpstatuscode === 200 || res.data.httpstatuscode === 302){
 				setMessage({type:'success'})
 				setMessage({message:res.data.message});
@@ -110,11 +106,8 @@ export default function AddEmployee (props) {
  
     const handleCancel = () => { setValues({ ...initialState }); }
     
-	const location = useLocation();
-
-	const setForm = (response) => {
-		console.log(response);
-		setValues({
+	const setForm = async (response) => {
+		await setValues({
 			firstname:response.firstName,
 			lastname:props.location.state.data.lastName,
 			email:response.email,
@@ -123,19 +116,18 @@ export default function AddEmployee (props) {
 			});
 	}
 
+	const getEmployeeData = async (employeeId) => {
+		let res=await EmployeeService.getEmployeeById(employeeId);
+		if (res.data.httpStatusCode === 302){
+			setForm(res.data.data);
+		}
+	}
+
 	useEffect(() => {
 		
 		var employeeId = props.location.state.data.id;
-		EmployeeService.getEmployeeById(employeeId).then((res) => {
-			if (res.data.httpStatusCode === 302){
-				console.log("Hi");
-				setForm(res.data.data);
-			}
-		})
-		.catch((err) => {
-			console.log(err);
-		})
-		},[props.location.state.data])
+		getEmployeeData(employeeId);
+		},[props])
 	
 	
 	return (

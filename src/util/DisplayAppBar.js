@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import '../css/Employee.css';
 import Greeting from '../images/svg/GreetingApp.svg';
-import Login from '../images/svg/Login.svg';
 import Back from '../images/svg/Back.svg';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -27,23 +26,14 @@ export default function DisplayAppBar (props) {
 
     const classes = useStyles();
     
-	const handleLogin = () => {
-		history.push({
-          pathname:'/employee/login',
-          state:''
-        })
-	}
-	
-	const handleBack = () => {
+	  const handleBack = () => {
         history.push({
           pathname:'/',
           state:''
         })
     }
 
-	let loginText = 'Login';
-	
-    return (      
+	  return (      
       <div className={classes.root}>
         <AppBar position="static">
           <Toolbar>
@@ -54,7 +44,6 @@ export default function DisplayAppBar (props) {
               {props.title}
             </Typography>
 			{window.location.href.includes('/employee') && <Button color="inherit" onClick={handleBack} startIcon={<img src={Back} alt="" className="image_icon"/>}>Back</Button>}
-			{!window.location.href.includes('/login') && <Button color="inherit" onClick={handleLogin} startIcon={<img src={Login} alt="" className="image_icon"/>}>{loginText}</Button>}
           </Toolbar>
         </AppBar>
       </div>

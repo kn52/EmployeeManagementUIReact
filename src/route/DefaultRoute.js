@@ -2,7 +2,7 @@ import {Router, Route, Switch} from 'react-router-dom';
 import React from 'react';
 import history from './history';
 import Employee from '../component/Employee';
-import DashBoard from '../component/DashBoard';
+import DashBoard from '../component/Dashboard';
 import Login from '../component/Login';
 
 export default function DefaultRoute () {

@@ -41,33 +41,18 @@ const useStyles = makeStyles({
   },
 });
 
-function createData(id, firstName, lastName, email) {
-  return { id, firstName, lastName, email };
-}
-
-const rows = [ 
-	createData('aa','aa','bb','cc'),
-	createData('dd','dd','ee','ff'),
-	createData('aa','aa','bb','cc'),
-	createData('dd','dd','ee','ff'),
-	createData('aa','aa','bb','cc'),
-	createData('dd','dd','ee','ff'),
-	createData('aa','aa','bb','cc'),
-	createData('dd','dd','ee','ff')
-];
-
 export default function DisplayData (props) {
   const classes = useStyles();
 
   return (
     <TableContainer component={Paper}>
-      <Table aria-label="customized table">
+      <Table aria-label="customized table" className={classes.table}>
         <TableHead>
           <TableRow>
             <StyledTableCell style={{fontFamily:"cambria"}}>ID</StyledTableCell>
-            <StyledTableCell align="center" style={{fontFamily:"cambria"}}>FirstName</StyledTableCell>
-			<StyledTableCell align="center" style={{fontFamily:"cambria"}}>LastName</StyledTableCell>
-            <StyledTableCell align="center">Email</StyledTableCell>
+            <StyledTableCell align="left" style={{fontFamily:"cambria"}}>FirstName</StyledTableCell>
+			<StyledTableCell align="left" style={{fontFamily:"cambria"}}>LastName</StyledTableCell>
+            <StyledTableCell align="left">Email</StyledTableCell>
             <StyledTableCell align="center">Edit</StyledTableCell>
             <StyledTableCell align="center">Delete</StyledTableCell>
           </TableRow>
@@ -76,15 +61,13 @@ export default function DisplayData (props) {
           {props.data.map((row) => (
             <StyledTableRow key={row.name}>
               <StyledTableCell component="th" scope="row">{row.id}</StyledTableCell>
-              <StyledTableCell align="center">{row.firstName}</StyledTableCell>
-			  <StyledTableCell align="center">{row.lastName}</StyledTableCell>
-              <StyledTableCell align="center">{row.email}</StyledTableCell>
+              <StyledTableCell align="left">{row.firstName}</StyledTableCell>
+			  <StyledTableCell align="left">{row.lastName}</StyledTableCell>
+              <StyledTableCell align="left">{row.email}</StyledTableCell>
               <StyledTableCell align="center">
 			  <Button variant = "contained" color = "primary" className='font_family' onClick={()=>props.edit(row)}>
 				<img src={Edit} alt="" className='image_icon'/></Button></StyledTableCell>
-              <StyledTableCell align="center"><Button variant = "contained" color = "primary" className='font_family' onClick={()=>{
-				  if(window.confirm('Delete the record'))
-			  {rows(row.id)}}}>
+              <StyledTableCell align="center"><Button variant = "contained" color = "primary" className='font_family' onClick={()=>{props.del(row.id)}}>
 				<img src={Delete} alt="" className='image_icon'/></Button></StyledTableCell>
             </StyledTableRow>
           ))}
