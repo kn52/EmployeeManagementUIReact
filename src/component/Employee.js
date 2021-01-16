@@ -5,8 +5,11 @@ import DisplayAppBar from '../util/DisplayAppBar';
 import TextField from '@material-ui/core/TextField';
 import DisplaySnackBar from '../util/DisplaySnackBar';
 import EmployeeService from '../service/EmployeeService';
+import { useHistory } from 'react-router';
 
 export default function AddEmployee (props) {
+
+	const history = useHistory();
 
     const initialState = {
 		Id:0,
@@ -20,7 +23,7 @@ export default function AddEmployee (props) {
     const [{Id,firstname, lastname, email,password,phonenumber},setValues]=useState(initialState);
 
 	const [{message,type},setMessage]=useState({message:'',type:''});
-	
+
 	const [open,setOpen] = useState(false);
 	
 	const handleSnackbar = () => { 
@@ -38,17 +41,25 @@ export default function AddEmployee (props) {
     }
 
     const handleSave = (event) => {
-        if(window.location.href.includes('add'))
+		var bool=false;
+		if(window.location.href.includes('add'))
         {
-			handleAddEmployee(event);
+			bool = handleAddEmployee(event); 
 		}
         else
         {
-			handleEditEmployee(event);
+			bool = handleEditEmployee(event);
 		}
+		
 		handleSnackbar();
-        setValues({ ...initialState });
-    }
+		
+		if(bool){
+			setValues({ ...initialState });
+			// history.push({
+			// 	pathname:'/dashboard'
+			// })
+		}
+	}
 
 	const handleAddEmployee = async (event) => {
 		event.preventDefault();
@@ -58,22 +69,25 @@ export default function AddEmployee (props) {
             Email:email,
             Password:password,
             PhoneNumber:phonenumber
-        }
-		
+		}
+
 		await EmployeeService.addEmployee(employeeData).then((res) => {
 			if(res.data.httpstatuscode === 200 || res.data.httpstatuscode === 302){
 				setMessage({type:'success'})
 				setMessage({message:res.data.message});
+				return true;
 			}
 			else{
 				setMessage({type:'info'})
 				setMessage({message:res.data.message});
+				return false;
 			}
 		})
 		.catch((err) => {
 			setMessage({type:'error'})
 			setMessage({message:'Bad Request'});
 			console.log(err);
+			return false;
 		})
 	}
 
@@ -91,16 +105,19 @@ export default function AddEmployee (props) {
 			if(res.data.httpstatuscode === 200 || res.data.httpstatuscode === 302){
 				setMessage({type:'success'})
 				setMessage({message:res.data.message});
+				return true;
 			}
 			else{
 				setMessage({type:'info'})
 				setMessage({message:res.data.message});
+				return false;
 			}
 		})
 		.catch((err) => {
 			setMessage({type:'error'})
 			setMessage({message:'Bad Request'});
 			console.log(err);
+			return false;
 		}) 
     }
  
@@ -118,9 +135,7 @@ export default function AddEmployee (props) {
 
 	const getEmployeeData = async (employeeId) => {
 		let res=await EmployeeService.getEmployeeById(employeeId);
-		if (res.data.httpStatusCode === 302){
-			setForm(res.data.data);
-		}
+		setForm(res.data.data);
 	}
 
 	useEffect(() => {

@@ -67,7 +67,7 @@ export default function DisplayData (props) {
               <StyledTableCell align="center">
 			  <Button variant = "contained" color = "primary" className='font_family' onClick={()=>props.edit(row)}>
 				<img src={Edit} alt="" className='image_icon'/></Button></StyledTableCell>
-              <StyledTableCell align="center"><Button variant = "contained" color = "primary" className='font_family' onClick={()=>{props.del(row.id)}}>
+            <StyledTableCell align="center"><Button variant = "contained" color = "primary" className='font_family' onClick={()=>{props.del(row.id)}}>
 				<img src={Delete} alt="" className='image_icon'/></Button></StyledTableCell>
             </StyledTableRow>
           ))}

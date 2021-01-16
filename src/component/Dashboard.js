@@ -37,11 +37,11 @@ export default function DashBoard () {
 	
 	const getEmployeeData = async () => {
 		let res=await EmployeeService.getAllEmployee();
+		console.log(res);
 		setEmployeeData(res.data.data);
 	}
 	
 	const handleDelete =  async (employeeId) => {
-		console.log("Delete "+ employeeId);
 		await EmployeeService.deleteEmployee(employeeId);
 		getEmployeeData();
 	}

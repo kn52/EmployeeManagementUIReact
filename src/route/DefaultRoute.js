@@ -1,4 +1,4 @@
-import {Router, Route, Switch} from 'react-router-dom';
+import {Router, Route, Switch, Redirect} from 'react-router-dom';
 import React from 'react';
 import history from './history';
 import Employee from '../component/Employee';
@@ -12,7 +12,8 @@ export default function DefaultRoute () {
                 <Route path={"/employee/add"} exact component={Employee}/>
 				<Route path={"/employee/edit"} exact component={Employee}/>
                 <Route path={"/employee/login"} exact component={Login}/>
-                <Route path={"/"} exact component={DashBoard}/>                
+                <Route path={"/"} exact render={()=>{ return (<Redirect to='/dashboard'/>)}}/>
+                <Route path={"/dashboard"} exact component={DashBoard}/>                
             </Switch>
         </Router>
     );
